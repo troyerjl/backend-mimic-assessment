@@ -48,27 +48,38 @@ import sys
 
 
 def mimic_dict(filename):
-    """Returns mimic dict mapping each word to list of words which follow it."""
-    # +++your code here+++
-    raise NotImplementedError("Get to Work!")
+    mimic_dict = {}
+    with open("alice.txt", "r") as f:
+        content = f.read()
+    prev = ""
+    for word in content.split():
+        if not prev in mimic_dict:
+            mimic_dict[prev] = [word]
+        else:
+            mimic_dict[prev].append(word)
+        prev = word
+    return mimic_dict    
 
 
 def print_mimic(mimic_dict, word):
-    """Given mimic dict and start word, prints 200 random words:
-        - Start with '' (empty string) as a seed word.
-        - Print the seed word
-        - Lookup this word in your mimic_dict and get it's value list
-        - Randomly select a new seed word from this word list
-        - Repeat this process 200 times
-    """
-    # +++your code here+++
-    raise NotImplementedError("Get to Work!")
+    new_collection_words = []
+    new_string = ''
+    for i in range(0, 200):
+        print(word), 
+        new_collection_words.append(word)
+        new_word_list = mimic_dict[word]
+        word = random.choice(new_word_list)
+    for x in new_collection_words:
+        new_string += x + " "
+    print(new_string)
+
+    
 
 
 # Provided main(), calls mimic_dict() and mimic()
 def main():
     if len(sys.argv) != 2:
-        print 'usage: python mimic.py file-to-read'
+        print('usage: python mimic.py file-to-read')
         sys.exit(1)
 
     d = mimic_dict(sys.argv[1])
